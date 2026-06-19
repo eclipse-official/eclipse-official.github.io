@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eclipse Team — Dev · Gaming · Streaming · Video maker">
+    <meta name="author" content="Eclipse Team">
+    <title>Eclipse Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated background canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Scanline overlay -->
+    <div class="scanlines"></div>
+
+    <header>
+        <nav>
+            <div class="logo-mark">EC</div>
+            <ul>
+                <li><a href="" class="nav-link active">Accueil</a></li>
+                <li><a href="team" class="nav-link">Équipe</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="glitch-wrapper">
+                <h1 class="glitch" data-text="ECLIPSE">ECLIPSE</h1>
+            </div>
+            <div class="tagline">
+                <span class="tag" style="--i:0">DEV</span>
+                <span class="dot">·</span>
+                <span class="tag" style="--i:1">GAMING</span>
+                <span class="dot">·</span>
+                <span class="tag" style="--i:2">STREAMING</span>
+                <span class="dot">·</span>
+                <span class="tag" style="--i:3">VIDEO MAKER</span>
+            </div>
+            <div class="cta-row">
+                <a href="team" class="btn-primary">Découvrir l'équipe</a>
+                <div class="status-pill">
+                    <span class="live-dot"></span> ONLINE
+                </div>
+                <a href="https://de.rocknite-studio.com" target="_blank" rel="noopener" class="status-pill">Discord</a>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-num" data-target="45">0</span>
+                <span class="stat-label">Membres</span>
+            </div>
+            <div class="divider"></div>
+            <div class="stat">
+                <span class="stat-num" data-target="24">0</span>
+                <span class="stat-label">Projets</span>
+            </div>
+            <div class="divider"></div>
+            <div class="stat">
+                <span class="stat-num" data-target="7">0</span>
+                <span class="stat-label">Streams / semaine</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <span class="footer-copy">&copy; 2025 Eclipse Team</span>
+        <span class="footer-line"></span>
+        <span class="footer-mono">v1.0.0</span>
+    </footer>
+
+    <script>
+        // ── Particle canvas ──────────────────────────────────────────
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [];
+
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() { this.reset(true); }
+            reset(init) {
+                this.x  = Math.random() * W;
+                this.y  = init ? Math.random() * H : H + 10;
+                this.vy = -(0.2 + Math.random() * 0.5);
+                this.vx = (Math.random() - 0.5) * 0.2;
+                this.r  = Math.random() * 1.2 + 0.3;
+                this.a  = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.y < -10) this.reset(false);
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0,200,255,${this.a})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = Array.from({length: 120}, () => new Particle());
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(0,200,255,0.04)';
+            ctx.lineWidth   = 1;
+            const step = 60;
+            for (let x = 0; x < W; x += step) {
+                ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+            }
+            for (let y = 0; y < H; y += step) {
+                ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+            }
+        }
+
+        function loop() {
+            ctx.clearRect(0,0,W,H);
+            drawGrid();
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(loop);
+        }
+
+        resize();
+        initParticles();
+        loop();
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+
+        // ── Counter animation ────────────────────────────────────────
+        function animateCounters() {
+            document.querySelectorAll('.stat-num').forEach(el => {
+                const target = +el.dataset.target;
+                let current  = 0;
+                const step   = target / 40;
+                const timer  = setInterval(() => {
+                    current = Math.min(current + step, target);
+                    el.textContent = Math.floor(current);
+                    if (current >= target) clearInterval(timer);
+                }, 40);
+            });
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(animateCounters, 600);
+        });
+    </script>
+</body>
+</html>

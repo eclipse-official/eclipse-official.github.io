@@ -1,0 +1,255 @@
+/* ── Page header ────────────────────────────────────────────── */
+.page-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeUp 0.6s ease both;
+}
+
+.page-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--cyan);
+    opacity: 0.6;
+    background: transparent;
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(0,200,255,0.3);
+    margin: 0.4rem 0 0.6rem;
+    background: transparent;
+}
+
+.page-sub {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    background: transparent;
+}
+
+/* ── Cards grid ─────────────────────────────────────────────── */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 380px));
+    gap: 2rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.card {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    background: rgba(255,255,255,0.025);
+    backdrop-filter: blur(12px);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+    animation-delay: calc(var(--i) * 0.15s);
+    transition: border-color 0.3s, transform 0.3s;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+
+.card:hover {
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    transform: translateY(-4px);
+}
+
+/* Corner cut accent */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 16px; height: 16px;
+    background: var(--accent);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    opacity: 0.6;
+}
+
+/* Glow effect on hover */
+.card-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% -20%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 0;
+}
+
+.card:hover .card-glow { opacity: 1; }
+
+/* ── Card top ───────────────────────────────────────────────── */
+.card-top {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+
+/* ── Avatar ─────────────────────────────────────────────────── */
+.avatar {
+    position: relative;
+    width: 60px; height: 60px;
+    flex-shrink: 0;
+    background: transparent;
+}
+
+.avatar-initials {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, #050608);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    text-shadow: 0 0 12px var(--accent);
+    clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+}
+
+.avatar-ring {
+    position: absolute;
+    inset: -4px;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+    animation: ringPulse 3s infinite;
+    background: transparent;
+}
+
+@keyframes ringPulse {
+    0%,100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* ── Card ID ────────────────────────────────────────────────── */
+.card-id {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    background: transparent;
+}
+
+.card-name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+    background: transparent;
+}
+
+.name-suffix {
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent);
+    background: transparent;
+}
+
+.card-role {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    background: transparent;
+}
+
+/* ── Chips ──────────────────────────────────────────────────── */
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+
+.chip {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent) 80%, white);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    padding: 0.25rem 0.6rem;
+}
+
+/* ── Socials ────────────────────────────────────────────────── */
+.card-socials {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.social-btn:hover { transform: translateY(-2px); }
+
+.social-btn.twitch {
+    color: #bf94ff;
+    border-color: rgba(191,148,255,0.2);
+    background: rgba(191,148,255,0.06);
+}
+.social-btn.twitch:hover {
+    background: rgba(191,148,255,0.14);
+    border-color: rgba(191,148,255,0.5);
+    box-shadow: 0 0 14px rgba(191,148,255,0.25);
+}
+
+.social-btn.youtube {
+    color: #ff4444;
+    border-color: rgba(255,68,68,0.2);
+    background: rgba(255,68,68,0.06);
+}
+.social-btn.youtube:hover {
+    background: rgba(255,68,68,0.14);
+    border-color: rgba(255,68,68,0.5);
+    box-shadow: 0 0 14px rgba(255,68,68,0.25);
+}
+
+.social-btn.tiktok {
+    color: #ff0050;
+    border-color: rgba(255,0,80,0.2);
+    background: rgba(255,0,80,0.06);
+}
+.social-btn.tiktok:hover {
+    background: rgba(255,0,80,0.14);
+    border-color: rgba(255,0,80,0.5);
+    box-shadow: 0 0 14px rgba(255,0,80,0.25);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 500px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .card { padding: 1.5rem; }
+}
