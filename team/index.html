@@ -16,6 +16,8 @@
 
     <canvas id="bg-canvas"></canvas>
     <div class="scanlines"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
 
     <header>
         <nav>
@@ -189,6 +191,33 @@
 
         resize(); initParticles(); loop();
         window.addEventListener('resize', () => { resize(); initParticles(); });
+
+        // ── Custom cursor follow ring ─────────────────────────────────
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorRing = document.querySelector('.cursor-ring');
+        let ringTargetX = window.innerWidth / 2;
+        let ringTargetY = window.innerHeight / 2;
+        let ringPosX = ringTargetX;
+        let ringPosY = ringTargetY;
+        const ringSpeed = 0.16;
+
+        window.addEventListener('mousemove', (event) => {
+            const { clientX, clientY } = event;
+            cursorDot.style.left = `${clientX}px`;
+            cursorDot.style.top = `${clientY}px`;
+            ringTargetX = clientX;
+            ringTargetY = clientY;
+        });
+
+        function animateCursorRing() {
+            ringPosX += (ringTargetX - ringPosX) * ringSpeed;
+            ringPosY += (ringTargetY - ringPosY) * ringSpeed;
+            cursorRing.style.left = `${ringPosX}px`;
+            cursorRing.style.top = `${ringPosY}px`;
+            requestAnimationFrame(animateCursorRing);
+        }
+
+        animateCursorRing();
     </script>
 </body>
 </html>

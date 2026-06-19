@@ -27,6 +27,44 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    cursor: none;
+}
+
+* {
+    cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.cursor-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px rgba(0,200,255,0.8);
+}
+
+.cursor-ring {
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(0,200,255,0.6);
+    border-radius: 50%;
+    opacity: 0.8;
+    mix-blend-mode: screen;
+}
+
+@media (hover: none), (pointer: coarse) {
+    body { cursor: auto; }
+    .cursor-dot,
+    .cursor-ring { display: none; }
 }
 
 /* ── Canvas background ──────────────────────────────────────── */
