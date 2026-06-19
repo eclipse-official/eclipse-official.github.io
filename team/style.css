@@ -36,16 +36,20 @@
 /* ── Cards grid ─────────────────────────────────────────────── */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 380px));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     justify-content: center;
+    justify-items: center;
     width: 100%;
     max-width: 900px;
+    margin-top: 2rem;
+    padding: 0 1rem;
 }
 
 /* ── Card ───────────────────────────────────────────────────── */
 .card {
     position: relative;
+    width: 100%;
     border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
     background: rgba(255,255,255,0.025);
     backdrop-filter: blur(12px);
